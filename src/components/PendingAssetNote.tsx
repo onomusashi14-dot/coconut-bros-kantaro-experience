@@ -7,7 +7,16 @@ import { getAsset } from '../data/assets'
  * label texture — so that nothing in this build can be mistaken for the
  * finished product during a live viewing.
  */
-export function PendingAssetNote({ assetIds, side = 'right' }: { assetIds: string[]; side?: 'left' | 'right' }) {
+export function PendingAssetNote({
+  assetIds,
+  side = 'right',
+  note,
+}: {
+  assetIds: string[]
+  side?: 'left' | 'right'
+  /** What is on screen in the meantime, when it is worth naming. */
+  note?: string
+}) {
   const pending = assetIds.map(getAsset)
   if (pending.length === 0) return null
   return (
@@ -27,7 +36,7 @@ export function PendingAssetNote({ assetIds, side = 'right' }: { assetIds: strin
         opacity: 0.62,
       }}
     >
-      Stand-in — awaiting {pending.map((a) => a.path).join(' and ')}
+      {note ?? 'Stand-in'} — awaiting {pending.map((a) => a.path).join(' and ')}
     </p>
   )
 }

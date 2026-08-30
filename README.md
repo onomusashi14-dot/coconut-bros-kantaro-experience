@@ -7,11 +7,12 @@ Seven chapters, one at a time, driven entirely from the keyboard. Nothing
 auto-advances: every chapter plays its sequence, settles into a stable
 composition, and waits indefinitely for the presenter.
 
-> **This is a functional first prototype.** Nine production assets — the
-> approved logo, the Siam Reserve label, three photographs, the Blender hero
-> render, the bottle GLB and the poster still — have not been supplied. They
-> appear as clearly labelled placeholders. Nothing invents, redraws or
-> approximates the Coconut Bros logo, the bottle or the label.
+> **This is a functional first prototype.** The approved logo, the Bangkok
+> storefront photograph and an interim raster hero of the Siam Reserve bottle
+> are in. Six production assets are still outstanding — the label artwork, two
+> provenance photographs, the Blender hero render, the bottle GLB and the poster
+> still — and appear as clearly labelled placeholders. Nothing invents, redraws
+> or approximates the Coconut Bros logo, the bottle or the label.
 
 ---
 
@@ -135,39 +136,41 @@ Honest status. None of the placeholders below is a finished asset.
 
 **Blocking a real presentation**
 
-1. **`assets/brand/coconut-bros-logo.svg` / `.png`** — the approved logo. The
-   Chapter 3 signage reveal and the Chapter 7 system currently show a labelled
-   brand slot. This build will not draw a logo, and a storefront photograph
-   crop is not an acceptable substitute.
-2. **`assets/brand/siam-reserve-label.png`** — the label artwork. The 3D bottle
-   carries a blank deep-green band, and says so on screen. Label typography is
-   never generated procedurally.
-3. **`assets/video/bottle-transformation.mp4`** — the Blender hero render. The
+1. **`assets/brand/siam-reserve-label.png`** — the label artwork. The 3D bottle
+   in chapters 6 and 7 carries a blank deep-green band and says so on screen.
+   Label typography is never generated procedurally.
+2. **`assets/video/bottle-transformation.mp4`** — the Blender hero render. The
    WebGL stand-in plays the same beat map and hands off at the same frame, so
    timing and rehearsal are correct now, but the finished chapter needs the
    render.
-4. **`assets/models/siam-reserve-bottle.glb`** — the bottle. The lathe stand-in
-   has the right height, framing and materials, but it is a proportion study,
-   not the product.
-5. **`public/poster.jpg`** — the matched hero still, which is also the global
+3. **`assets/models/siam-reserve-bottle.glb`** — the bottle. The supplied raster
+   hero covers Chapter 5's hold, but chapters 6 and 7 move the camera around the
+   bottle, so they still run the lathe stand-in and need real geometry.
+4. **`public/poster.jpg`** — the matched hero still, which is also the global
    video-failure fallback.
-6. **`assets/images/nam-hom-harvest.jpg`, `nam-hom-selection.jpg`,
-   `bangkok-store.jpg`** — the three photographs the narrative names directly.
+5. **`assets/images/nam-hom-harvest.jpg`, `nam-hom-selection.jpg`** — two of the
+   three photographs Chapter 2 names directly.
 
 **Known limitations of this build**
 
 - **Audio is synthesised.** Six sound files are outstanding. Restrained
   synthesised beds and transients stand in; they hold the shape of the sound
   design without pretending to be it.
-- **Chapter 3's storefront is a constructed diagram**, not the store. It
-  animates the assembly correctly and labels itself as a stand-in; the
-  photograph replaces it for the reveal once supplied.
+- **Chapter 3 assembles a constructed diagram of the store**, then dissolves
+  into the supplied photograph for the reveal and the hold. The diagram is a
+  build sequence, not a depiction of the store.
+- **The Siam Reserve bottle in chapters 6 and 7 is a proportion stand-in.**
+  Chapter 5's hold shows the approved product still; the two chapters that move
+  the camera cannot, until the GLB arrives.
 - **Country outlines in Chapter 6 are stylised line drawings**, deliberately, to
   serve the gold-line motif. If the partner conversation needs geographic
   accuracy, they should be redrawn from real boundary data.
 - **Typography is Inter and Noto Sans JP**, both bundled locally. If a licensed
   display family is chosen, add it under `public/assets/fonts/` and swap the
   `@import`s at the top of `src/styles.css`.
+- **`assets/images/uniforms.jpg` is supplied but unplaced.** There is no
+  composition calling for it yet; say where it belongs and it takes about ten
+  minutes.
 - **`?debug=assets` ships in the production build.** It is reachable only by
   URL, never during the presentation. Remove the `AssetDebugOverlay` mount in
   `src/App.tsx` if it should not exist in a handover build.

@@ -6,7 +6,8 @@ import { GroveScene } from './GroveScene'
 import { BottleScene } from './BottleScene'
 import { usePresentation } from '../state/presentation'
 import { isAssetPresent } from '../data/assets'
-import { clamp } from '../animation/ease'
+import { clamp, inverseLerp } from '../animation/ease'
+import { HERO } from './heroTimeline'
 
 /**
  * The single persistent WebGL layer.
@@ -32,7 +33,16 @@ export function StageCanvas() {
 
   // Chapter 4 clears its copy and dissolves into the matched pre-roll frame over
   // its last few seconds, so the cut into the hero reveal has nothing to hide.
-  const layerOpacity = !usesWebgl ? 0 : number === 4 ? clamp((elapsed - 22) / 3.5) : 1
+  // Chapter 5 hands the final hold to the approved product still when it exists,
+  // so the live bottle fades out underneath it rather than showing through.
+  const rasterHold = number === 5 && isAssetPresent('img-bottle-hero')
+  const layerOpacity = !usesWebgl
+    ? 0
+    : number === 4
+      ? clamp((elapsed - 22) / 3.5)
+      : rasterHold
+        ? 1 - clamp(inverseLerp(HERO.rasterCross[0], HERO.rasterCross[1], elapsed))
+        : 1
 
   return (
     <div

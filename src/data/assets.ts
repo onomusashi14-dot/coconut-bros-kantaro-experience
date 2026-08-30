@@ -28,9 +28,9 @@ export const ASSET_MANIFEST: AssetEntry[] = [
     path: 'assets/brand/coconut-bros-logo.svg',
     kind: 'brand',
     description:
-      'The official standalone Coconut Bros logo (ornate gold-and-green identity), vector, transparent background, trimmed to the artwork. Must be the approved artwork — never redrawn, never a crop of a storefront photograph.',
-    aspect: '1:1 – 4:3',
-    requiredForFinal: true,
+      'The official standalone Coconut Bros logo (ornate gold-and-green identity), vector, transparent background, trimmed to the artwork. Must be the approved artwork — never redrawn, never a crop of a storefront photograph. The supplied 4096px PNG covers every use in this build, so vector is only needed if the mark is ever printed or scaled beyond that.',
+    aspect: '≈ 2.07:1',
+    requiredForFinal: false,
     chapters: [3, 5, 7],
     fallback: 'Labelled brand-slot placeholder. No logo is drawn or approximated.',
   },
@@ -39,8 +39,8 @@ export const ASSET_MANIFEST: AssetEntry[] = [
     path: 'assets/brand/coconut-bros-logo.png',
     kind: 'brand',
     description:
-      'Raster fallback of the same approved logo, transparent PNG, at least 2048px on the long edge. Used for the WebGL label decal.',
-    aspect: 'as the SVG',
+      'The approved logo as a transparent PNG, at least 2048px on the long edge. Supplied at 4096×1978; this is what the signage reveal renders.',
+    aspect: '≈ 2.07:1',
     requiredForFinal: true,
     chapters: [3, 5, 7],
     fallback: 'Labelled brand-slot placeholder; the 3D bottle label stays a neutral blank panel.',
@@ -94,8 +94,8 @@ export const ASSET_MANIFEST: AssetEntry[] = [
     path: 'assets/images/bangkok-store.jpg',
     kind: 'image',
     description:
-      'The Bangkok flagship storefront, straight-on, showing the outside cutting counter, the two coconut shelves and the signage in context.',
-    aspect: '16:9',
+      'The Bangkok flagship storefront, straight-on, showing the outside cutting counter, the two coconut shelves and the signage in context. Supplied portrait at 1023×1537; chapters 3 and 7 are composed around that shape so the sign and pavement are never cropped away.',
+    aspect: '2:3 (portrait)',
     requiredForFinal: true,
     chapters: [3, 4, 7],
     fallback: 'Labelled 16:9 placeholder frame; the procedural counter build still plays.',
@@ -104,11 +104,23 @@ export const ASSET_MANIFEST: AssetEntry[] = [
     id: 'img-uniforms',
     path: 'assets/images/uniforms.jpg',
     kind: 'image',
-    description: 'Staff uniforms and service presentation at the counter.',
-    aspect: '3:2',
+    description: 'Staff uniforms and service presentation at the counter. Supplied as a four-up front/back sheet at 1662×946.',
+    aspect: '16:9',
     requiredForFinal: false,
     chapters: [4],
     fallback: 'Slot is omitted from the composition.',
+  },
+
+  {
+    id: 'img-bottle-hero',
+    path: 'assets/images/siam-reserve-bottle-hero.png',
+    kind: 'image',
+    description:
+      'Interim raster hero of the Siam Reserve bottle — ribbed glass, condensation, printed label, Thai seal over the cap. Portrait, dark ground. Chapter 5 dissolves into this for its final hold. It is a still, not the product model: it does not replace siam-reserve-bottle.glb, and chapters 6 and 7 keep the live 3D bottle because their camera moves need one.',
+    aspect: '2:3 (portrait)',
+    requiredForFinal: false,
+    chapters: [5],
+    fallback: 'Chapter 5 holds on the live Three.js bottle instead.',
   },
 
   // ---------------------------------------------------------------- video ---

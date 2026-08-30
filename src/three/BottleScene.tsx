@@ -116,8 +116,8 @@ export function BottleScene({ chapterIndex, elapsed, progress, held, videoDriven
       // The closing frame shifts the bottle right so the Bangkok store can sit
       // beside it as the other expression of the same brand.
       const pair = easeCinematic(clamp((progress - 0.8) / 0.2))
-      target = [lerp(0, -0.145, pair), lerp(0.13, 0.15, pull), lerp(0.62, 0.95, pull)]
-      look = [lerp(0, -0.145, pair), 0.116, 0]
+      target = [lerp(0, -0.235, pair), lerp(0.13, 0.15, pull), lerp(0.62, 0.95, pull)]
+      look = [lerp(0, -0.235, pair), 0.116, 0]
     }
 
     camera.position.x = THREE.MathUtils.damp(camera.position.x, target[0], 2.6, delta)

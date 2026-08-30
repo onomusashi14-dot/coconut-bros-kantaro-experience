@@ -89,44 +89,56 @@ export function Chapter07Partnership() {
         </div>
       )}
 
-      {/* Two expressions of one brand: the Bangkok store, and the bottle the
-          camera has pulled back to reveal on the right. One flow column, so the
-          panel and the closing copy cannot collide on a shorter 16:9 screen. */}
+      {/* Two expressions of one brand: the Bangkok store on the left, the
+          bottle the camera has pulled back to reveal on the right. The
+          photograph is portrait, so it gets its own column rather than being
+          cropped into the copy flow. */}
       {finalOpacity > 0.01 && (
-        <div className="type-frame type-frame--bottom-left" style={{ opacity: finalOpacity }}>
+        <>
           <div
-            className="copy-block"
-            style={{ maxWidth: 'min(46ch, 50vw)', display: 'grid', gap: 'clamp(14px, 2.2vh, 28px)' }}
+            style={{
+              position: 'absolute',
+              left: 'var(--edge)',
+              top: '50%',
+              transform: 'translateY(-50%)',
+              width: 'min(18vw, 250px)',
+              opacity: finalOpacity,
+              zIndex: 6,
+            }}
           >
-            <div style={{ width: 'min(28vw, 400px)' }}>
-              <AssetImage
-                assetId="img-store"
-                alt="The Coconut Bros Bangkok flagship storefront."
-                ratio="16 / 9"
-                compact
-              />
-              <p className="label-line" style={{ marginTop: 12 }}>
-                Bangkok flagship · the ritual
-              </p>
-            </div>
+            <AssetImage
+              assetId="img-store"
+              alt="The Coconut Bros Bangkok flagship storefront."
+              ratio="2 / 3"
+              compact
+            />
+            <p className="label-line" style={{ marginTop: 14 }}>
+              Bangkok flagship
+            </p>
+          </div>
 
-            <div>
+          <div
+            className="type-frame type-frame--bottom-left"
+            style={{
+              opacity: finalOpacity,
+              paddingLeft: 'calc(var(--edge) + min(18vw, 250px) + clamp(28px, 3vw, 56px))',
+            }}
+          >
+            <div className="copy-block" style={{ maxWidth: 'min(44ch, 46vw)' }}>
               <Statement
                 lines={['BUILD THE LEGEND IN BANGKOK.', 'CARRY IT TO JAPAN.']}
                 progress={closing.enter}
                 compact
               />
               <Ja lines={['バンコクで伝説を築き、日本へ届ける。']} />
-            </div>
-
-            <div>
+              <div style={{ height: 26 }} />
               <p className="label-line">Proposed next step</p>
               <p className="support-line" style={{ marginTop: 8 }}>
                 Joint feasibility and product-validation phase.
               </p>
             </div>
           </div>
-        </div>
+        </>
       )}
 
       {modelPending && <PendingAssetNote assetIds={['model-bottle']} />}

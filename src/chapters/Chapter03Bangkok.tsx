@@ -5,7 +5,7 @@ import { AssetImage } from '../components/Placeholder'
 import { PendingAssetNote } from '../components/PendingAssetNote'
 import { useBeat } from '../animation/useBeat'
 import { usePresentation } from '../state/presentation'
-import { clamp, easeCinematic } from '../animation/ease'
+import { clamp, easeCinematic, lerp } from '../animation/ease'
 import { useCueAt } from '../audio/AudioProvider'
 import { isAssetPresent } from '../data/assets'
 
@@ -32,14 +32,36 @@ export function Chapter03Bangkok() {
 
   return (
     <ChapterShell>
+      {/* The storefront photograph is portrait, and it carries the sign, the
+          shelves and the pavement in one frame. It gets a portrait panel rather
+          than a 16:9 crop, which would cut the top off the signage. */}
       {storefront && (
-        <div className="layer" style={{ zIndex: 2, opacity: reveal }}>
-          <AssetImage
-            assetId="img-store"
-            alt="The Coconut Bros Bangkok flagship: an outside cutting counter, two shelves of whole Nam Hom coconuts, and the signage above."
-            ratio="16 / 9"
-            style={{ position: 'absolute', inset: 0, height: '100%' }}
-          />
+        <div
+          className="layer"
+          style={{
+            zIndex: 2,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'flex-end',
+            padding: 'var(--edge)',
+            paddingRight: 'calc(var(--edge) * 1.5)',
+            opacity: reveal,
+          }}
+        >
+          <div
+            style={{
+              height: 'min(78vh, 100%)',
+              aspectRatio: '2 / 3',
+              transform: `scale(${lerp(1.04, 1, reveal)})`,
+              boxShadow: '0 40px 90px rgba(0, 0, 0, 0.55)',
+            }}
+          >
+            <AssetImage
+              assetId="img-store"
+              alt="The Coconut Bros Bangkok flagship: an outside cutting counter, two shelves of whole Nam Hom coconuts, and the ornate signage above, seen from the pavement."
+              ratio="2 / 3"
+            />
+          </div>
         </div>
       )}
       <BangkokCounter elapsed={elapsed} opacity={counterOpacity} />
@@ -60,7 +82,13 @@ export function Chapter03Bangkok() {
         <Ja lines={['忘れられないバンコク体験。']} />
       </Beat>
 
-      <Beat from={17.0} placement="bottom-left" scrim="bottom">
+      {/* With the photograph holding the right of the frame, the offer moves to
+          the vertical centre of the left half so the two masses balance. */}
+      <Beat
+        from={17.0}
+        placement={storefront ? 'center-left' : 'bottom-left'}
+        scrim={storefront ? 'left' : 'bottom'}
+      >
         <div className="price-plate" style={{ opacity: easeCinematic(offer.enter) }}>
           <span className="price-plate__product">Sweet Thai Nam Hom Coconut</span>
           <span className="price-plate__price">79 THB</span>

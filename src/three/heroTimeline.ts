@@ -15,5 +15,12 @@ export const HERO = {
   hold: [20, 24] as const,
   /** Crossfade window from rendered video to the live Three.js bottle. */
   handoff: [20.4, 22.0] as const,
+  /**
+   * Dissolve from the live bottle into the approved raster hero for the final
+   * hold, when that still is supplied. Unlike `handoff` this is a dissolve, not
+   * a matched cut — the still is a studio shot, so it is timed to land in the
+   * silence after the reveal rather than to hide a seam.
+   */
+  rasterCross: [22.2, 23.8] as const,
   total: 24,
 }

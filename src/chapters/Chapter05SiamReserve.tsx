@@ -5,9 +5,9 @@ import { CinematicVideo } from '../components/CinematicVideo'
 import { PendingAssetNote } from '../components/PendingAssetNote'
 import { useBeat } from '../animation/useBeat'
 import { usePresentation } from '../state/presentation'
-import { clamp, easeCinematic, inverseLerp } from '../animation/ease'
+import { clamp, easeCinematic, inverseLerp, lerp } from '../animation/ease'
 import { HERO } from '../three/heroTimeline'
-import { isAssetPresent } from '../data/assets'
+import { assetUrl, isAssetPresent } from '../data/assets'
 import { markVideoFailed, useVideoHealthy } from '../state/videoHealth'
 import { useCueAt } from '../audio/AudioProvider'
 
@@ -43,11 +43,42 @@ export function Chapter05SiamReserve() {
   const modelPending = !isAssetPresent('model-bottle')
   const labelPending = !isAssetPresent('siam-reserve-label')
 
+  // The approved raster hero takes the final hold, where the frame is meant to
+  // be still anyway. It is a dissolve, not a matched cut — see HERO.rasterCross.
+  const hasRaster = isAssetPresent('img-bottle-hero')
+  const rasterUrl = assetUrl('img-bottle-hero')
+  const raster = hasRaster
+    ? easeCinematic(clamp(inverseLerp(HERO.rasterCross[0], HERO.rasterCross[1], elapsed)))
+    : 0
+
   return (
     <ChapterShell>
       {hasVideo && (
         <div className="layer layer--media" style={{ opacity: 1 - handoff }}>
           <CinematicVideo assetId={VIDEO_ID} progress={clamp(elapsed / HERO.total)} onUnavailable={onUnavailable} />
+        </div>
+      )}
+
+      {rasterUrl && raster > 0.005 && (
+        <div className="layer" style={{ zIndex: 2, opacity: raster }}>
+          <img
+            src={rasterUrl}
+            alt="The Siam Reserve bottle: ribbed clear glass beaded with condensation, the Coconut Bros mark and SIAM RESERVE printed on the face, a deep green Thai seal closing over the cap."
+            style={{
+              position: 'absolute',
+              top: '50%',
+              left: '62%',
+              transform: `translate(-50%, -50%) scale(${lerp(1.03, 1, raster)})`,
+              height: 'min(88vh, 900px)',
+              width: 'auto',
+              // The still is a studio shot on a dark ground; a soft radial mask
+              // dissolves its frame edge into the chapter's void rather than
+              // leaving a rectangle floating in it.
+              maskImage: 'radial-gradient(ellipse 58% 54% at 50% 50%, #000 62%, transparent 100%)',
+              WebkitMaskImage: 'radial-gradient(ellipse 58% 54% at 50% 50%, #000 62%, transparent 100%)',
+            }}
+            draggable={false}
+          />
         </div>
       )}
 
@@ -78,6 +109,7 @@ export function Chapter05SiamReserve() {
       {(modelPending || labelPending) && (
         <PendingAssetNote
           assetIds={[...(modelPending ? ['model-bottle'] : []), ...(labelPending ? ['siam-reserve-label'] : [])]}
+          note={hasRaster ? 'Holding on the approved product still' : undefined}
         />
       )}
     </ChapterShell>
