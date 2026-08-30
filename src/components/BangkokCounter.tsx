@@ -107,13 +107,15 @@ export function BangkokCounter({ elapsed, opacity }: BangkokCounterProps) {
 
         {/* Signage plate. The logo itself is an HTML layer above this SVG so a
             missing brand file shows as a labelled slot, never as invented art. */}
+        {/* Sized to hold the brand slot with clearance on every side, so a
+            missing logo reads as an empty sign rather than as overflow. */}
         <g opacity={sign}>
-          <rect x="520" y={150 + (1 - sign) * 24} width="560" height="140" rx="4" fill="#0f3b28" opacity={sign * 0.94} />
+          <rect x="508" y={126 + (1 - sign) * 24} width="584" height="200" rx="4" fill="#0f3b28" opacity={sign * 0.94} />
           <rect
-            x="520"
-            y={150 + (1 - sign) * 24}
-            width={560 * sign}
-            height="140"
+            x="508"
+            y={126 + (1 - sign) * 24}
+            width={584 * sign}
+            height="200"
             rx="4"
             fill="none"
             stroke="#c89636"
@@ -170,9 +172,9 @@ export function BangkokCounter({ elapsed, opacity }: BangkokCounterProps) {
         style={{
           position: 'absolute',
           left: '50%',
-          // Aligned to the centre of the signage plate in the SVG above (y 150–290
+          // Aligned to the centre of the signage plate in the SVG above (y 126–326
           // of a 900-unit viewBox), which holds at both 16:10 and 16:9.
-          top: '24.4%',
+          top: '25.1%',
           transform: `translate(-50%, -50%) scale(${lerp(0.94, 1, sign)})`,
           opacity: sign,
           display: 'grid',
