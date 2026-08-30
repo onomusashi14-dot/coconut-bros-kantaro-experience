@@ -53,7 +53,9 @@ export function Chapter05SiamReserve() {
 
       {/* One block, two beats: the wordmark resolves first, the line follows.
           No explanatory body copy ever enters the hero frame. */}
-      <Beat from={20.2} placement="bottom-left" scrim="bottom" blockClassName="copy-block--wide">
+      {/* No scrim: the hero frame is already dark, and a gradient's knee is
+          visible against it. */}
+      <Beat from={20.2} placement="bottom-left" blockClassName="copy-block--wide">
         <p
           style={{
             margin: 0,

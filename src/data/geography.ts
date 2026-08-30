@@ -15,12 +15,12 @@ export const THAILAND_PATH =
 
 /** Local box: 120 × 160. Kyushu through Honshu to Aomori, as one stroke. */
 export const JAPAN_MAIN_PATH =
-  'M 14 140 L 22 128 L 30 126 L 40 118 L 52 110 L 62 102 L 72 90 L 80 76 L 88 62 ' +
-  'L 94 48 L 100 36 L 104 26 L 96 22 L 90 34 L 84 48 L 78 62 L 70 74 L 62 86 ' +
-  'L 52 96 L 42 106 L 32 114 L 22 118 L 12 128 Z'
+  'M 10 148 L 20 138 L 24 128 L 34 122 L 46 118 L 58 112 L 70 104 L 79 94 L 88 80 ' +
+  'L 96 66 L 102 52 L 107 38 L 110 24 L 100 20 L 94 34 L 88 50 L 81 64 L 73 77 ' +
+  'L 64 88 L 53 97 L 42 104 L 31 110 L 22 116 L 14 124 L 6 136 Z'
 
 /** Local box: 120 × 160. Shikoku. */
-export const JAPAN_SOUTH_PATH = 'M 48 122 L 60 116 L 67 121 L 55 129 Z'
+export const JAPAN_SOUTH_PATH = 'M 44 126 L 58 120 L 66 126 L 52 133 Z'
 
 /** Local box: 120 × 160. Hokkaido. */
-export const JAPAN_NORTH_PATH = 'M 106 20 L 116 10 L 112 2 L 100 6 L 98 16 Z'
+export const JAPAN_NORTH_PATH = 'M 110 20 L 118 8 L 113 0 L 100 5 L 99 14 Z'

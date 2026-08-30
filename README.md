@@ -61,7 +61,7 @@ and worker security rules, so do not rely on it for the live presentation.
 |---|---|
 | `/` | The presentation |
 | `/?debug=assets` | Asset status board — present/missing, path, type, expected aspect ratio, whether it is required, and what is standing in |
-| `/?mode=scroll` | Development scroll-scrub mode for tuning chapter timing. Not for presenting. |
+| `/?mode=scroll` | Development scroll-scrub mode: the page scroll drives the same chapter clock, for tuning beat timing by hand. Not for presenting. |
 
 ---
 

@@ -1,8 +1,9 @@
-import { useMemo, useRef } from 'react'
+import { useEffect, useMemo, useRef } from 'react'
 import * as THREE from 'three'
 import { useFrame, useThree } from '@react-three/fiber'
 import { clamp, easeCinematic, easeInOut, lerp } from '../animation/ease'
 import { useLocalEnvironment } from './environment'
+import { createFrondAlpha } from './textures'
 
 /**
  * The opening world: humid air, giant fronds, a cluster of young coconuts, and
@@ -74,7 +75,15 @@ function buildFronds(): FrondPlacement[] {
 function Fronds({ energy }: { energy: number }) {
   const geometry = useMemo(createFrondGeometry, [])
   const placements = useMemo(buildFronds, [])
+  const alphaMap = useMemo(createFrondAlpha, [])
   const group = useRef<THREE.Group>(null)
+
+  useEffect(() => {
+    return () => {
+      geometry.dispose()
+      alphaMap.dispose()
+    }
+  }, [geometry, alphaMap])
 
   useFrame((state) => {
     if (!group.current) return
@@ -96,7 +105,15 @@ function Fronds({ energy }: { energy: number }) {
           scale={frond.scale}
           castShadow={false}
         >
-          <meshStandardMaterial color={frond.shade} roughness={0.82} metalness={0} side={THREE.DoubleSide} />
+          <meshStandardMaterial
+            color={frond.shade}
+            roughness={0.82}
+            metalness={0}
+            side={THREE.DoubleSide}
+            alphaMap={alphaMap}
+            transparent
+            alphaTest={0.45}
+          />
         </mesh>
       ))}
     </group>

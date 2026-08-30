@@ -90,46 +90,43 @@ export function Chapter07Partnership() {
       )}
 
       {/* Two expressions of one brand: the Bangkok store, and the bottle the
-          camera has pulled back to reveal on the right. */}
+          camera has pulled back to reveal on the right. One flow column, so the
+          panel and the closing copy cannot collide on a shorter 16:9 screen. */}
       {finalOpacity > 0.01 && (
-        <>
+        <div className="type-frame type-frame--bottom-left" style={{ opacity: finalOpacity }}>
           <div
-            style={{
-              position: 'absolute',
-              left: 'var(--edge)',
-              top: 'calc(var(--edge) * 2.1)',
-              width: 'min(34vw, 520px)',
-              opacity: finalOpacity,
-              zIndex: 6,
-            }}
+            className="copy-block"
+            style={{ maxWidth: 'min(46ch, 50vw)', display: 'grid', gap: 'clamp(14px, 2.2vh, 28px)' }}
           >
-            <AssetImage
-              assetId="img-store"
-              alt="The Coconut Bros Bangkok flagship storefront."
-              ratio="16 / 9"
-              compact
-            />
-            <p className="label-line" style={{ marginTop: 14 }}>
-              Bangkok flagship · the ritual
-            </p>
-          </div>
+            <div style={{ width: 'min(28vw, 400px)' }}>
+              <AssetImage
+                assetId="img-store"
+                alt="The Coconut Bros Bangkok flagship storefront."
+                ratio="16 / 9"
+                compact
+              />
+              <p className="label-line" style={{ marginTop: 12 }}>
+                Bangkok flagship · the ritual
+              </p>
+            </div>
 
-          <div className="type-frame type-frame--bottom-left" style={{ opacity: finalOpacity }}>
-            <div className="copy-block" style={{ maxWidth: 'min(44ch, 52vw)' }}>
+            <div>
               <Statement
                 lines={['BUILD THE LEGEND IN BANGKOK.', 'CARRY IT TO JAPAN.']}
                 progress={closing.enter}
                 compact
               />
               <Ja lines={['バンコクで伝説を築き、日本へ届ける。']} />
-              <div style={{ height: 26 }} />
+            </div>
+
+            <div>
               <p className="label-line">Proposed next step</p>
-              <p className="support-line" style={{ marginTop: 10 }}>
+              <p className="support-line" style={{ marginTop: 8 }}>
                 Joint feasibility and product-validation phase.
               </p>
             </div>
           </div>
-        </>
+        </div>
       )}
 
       {modelPending && <PendingAssetNote assetIds={['model-bottle']} />}

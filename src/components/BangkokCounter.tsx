@@ -87,7 +87,9 @@ export function BangkokCounter({ elapsed, opacity }: BangkokCounterProps) {
             <g key={y}>
               <rect x="300" y={y + 42} width="1000" height="14" fill="#4a2f1d" />
               {shelfCoconuts.map((i) => {
-                const appear = clamp((shelves * 15 - (row * 6 + i * 0.9)) / 3)
+                // Scaled so the last coconut on the lower shelf is fully in place
+                // by the time the shelf beat completes.
+                const appear = clamp((shelves * 24 - (row * 6 + i * 0.9)) / 3)
                 return (
                   <circle
                     key={i}
@@ -168,7 +170,9 @@ export function BangkokCounter({ elapsed, opacity }: BangkokCounterProps) {
         style={{
           position: 'absolute',
           left: '50%',
-          top: '22%',
+          // Aligned to the centre of the signage plate in the SVG above (y 150–290
+          // of a 900-unit viewBox), which holds at both 16:10 and 16:9.
+          top: '24.4%',
           transform: `translate(-50%, -50%) scale(${lerp(0.94, 1, sign)})`,
           opacity: sign,
           display: 'grid',

@@ -5,6 +5,7 @@ import { useLocalEnvironment } from './environment'
 import { HeroBottle } from './HeroBottle'
 import { bottleProfilePoints, sampleBottleSurface } from './bottleProfile'
 import { HERO } from './heroTimeline'
+import { createHeroBackdrop, createSoftDisc } from './textures'
 import { clamp, easeCinematic, easeImpact, inverseLerp, lerp } from '../animation/ease'
 
 const VOID_COLOUR = new THREE.Color('#030a06')
@@ -138,9 +139,11 @@ export function BottleScene({ chapterIndex, elapsed, progress, held, videoDriven
           look — under ACES the hero frame was reading almost black. */}
       <ambientLight intensity={0.55 + tone * 1.1} />
       <directionalLight position={[0.42, 0.7, 0.55]} intensity={3.4 + tone * 1.2} color="#fff6e2" />
-      <directionalLight position={[-0.6, 0.35, -0.5]} intensity={2.1} color="#c89636" />
+      {/* The warm edge highlight: grazing, from behind and slightly above. */}
+      <directionalLight position={[-0.55, 0.52, -0.34]} intensity={3.2} color="#e8b45c" />
       <directionalLight position={[0, -0.4, 0.3]} intensity={0.5} color="#2c6a43" />
 
+      <HeroBackdrop tone={tone} />
       <BackdropLeaves tone={tone} />
       <PresentationSurface tone={tone} />
 
@@ -156,6 +159,28 @@ export function BottleScene({ chapterIndex, elapsed, progress, held, videoDriven
         </>
       )}
     </>
+  )
+}
+
+/** The deep tropical field the glass refracts. */
+function HeroBackdrop({ tone }: { tone: number }) {
+  const ref = useRef<THREE.Mesh>(null)
+  const texture = useMemo(createHeroBackdrop, [])
+  useEffect(() => () => texture.dispose(), [texture])
+
+  useFrame((_, delta) => {
+    if (!ref.current) return
+    const material = ref.current.material as THREE.MeshBasicMaterial
+    material.opacity = THREE.MathUtils.damp(material.opacity, 1 - tone, 2.4, delta)
+    ref.current.visible = material.opacity > 0.02
+  })
+
+  return (
+    <mesh ref={ref} position={[0, 0.14, -0.72]}>
+      {/* Large enough that its own edges never enter frame at any aspect. */}
+      <planeGeometry args={[5, 3.2]} />
+      <meshBasicMaterial map={texture} transparent opacity={1} toneMapped={false} depthWrite={false} />
+    </mesh>
   )
 }
 
@@ -199,16 +224,29 @@ function BackdropLeaves({ tone }: { tone: number }) {
 /** The refined wooden surface that resolves as the story moves to Japan. */
 function PresentationSurface({ tone }: { tone: number }) {
   const ref = useRef<THREE.Mesh>(null)
+  const alphaMap = useMemo(createSoftDisc, [])
+  useEffect(() => () => alphaMap.dispose(), [alphaMap])
+
   useFrame((_, delta) => {
     if (!ref.current) return
     const material = ref.current.material as THREE.MeshStandardMaterial
-    material.opacity = THREE.MathUtils.damp(material.opacity, tone * 0.92, 2.2, delta)
+    material.opacity = THREE.MathUtils.damp(material.opacity, tone * 0.9, 2.2, delta)
     ref.current.visible = material.opacity > 0.02
   })
   return (
     <mesh ref={ref} rotation={[-Math.PI / 2, 0, 0]} position={[0, -0.0008, 0]}>
-      <circleGeometry args={[0.26, 64]} />
-      <meshStandardMaterial color="#b99a72" roughness={0.68} metalness={0} transparent opacity={0} />
+      <circleGeometry args={[0.24, 64]} />
+      {/* Alpha-masked so the surface fades out rather than ending in a hard
+          ellipse across the lower third of the frame. */}
+      <meshStandardMaterial
+        color="#cdb492"
+        roughness={0.72}
+        metalness={0}
+        transparent
+        opacity={0}
+        alphaMap={alphaMap}
+        depthWrite={false}
+      />
     </mesh>
   )
 }

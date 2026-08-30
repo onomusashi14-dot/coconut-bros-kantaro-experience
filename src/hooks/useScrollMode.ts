@@ -23,7 +23,7 @@ export function useScrollMode(enabled: boolean) {
   useEffect(() => {
     if (!enabled) return
     const trigger = ScrollTrigger.create({
-      trigger: document.body,
+      trigger: document.documentElement,
       start: 'top top',
       end: 'bottom bottom',
       onUpdate: (self) => {
@@ -33,6 +33,11 @@ export function useScrollMode(enabled: boolean) {
         seek((global - index) * CHAPTERS[index].duration)
       },
     })
-    return () => trigger.kill()
+    // The track mounts in the same commit, so measure once the layout settles.
+    const refresh = window.setTimeout(() => ScrollTrigger.refresh(), 60)
+    return () => {
+      window.clearTimeout(refresh)
+      trigger.kill()
+    }
   }, [enabled, jumpTo, seek])
 }

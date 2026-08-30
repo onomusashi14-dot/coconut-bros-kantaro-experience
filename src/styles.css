@@ -101,8 +101,19 @@ body {
   overflow: hidden;
   cursor: none;
 }
-body[data-mode='scroll'] { overflow-y: auto; cursor: auto; }
 body[data-pointer='visible'] { cursor: auto; }
+
+/* Scroll development mode lets the document itself grow, so the window is the
+   scroller. Making <body> the scroller instead hides the scroll from
+   ScrollTrigger, which watches the window by default. */
+html[data-mode='scroll'],
+html[data-mode='scroll'] body,
+html[data-mode='scroll'] #root {
+  height: auto;
+  min-height: 100%;
+  overflow: visible;
+}
+html[data-mode='scroll'] body { cursor: auto; }
 
 :focus-visible {
   outline: 2px solid var(--antique-gold);
@@ -565,7 +576,7 @@ kbd {
   position: fixed;
   inset: 0;
   z-index: 50;
-  background: rgba(3, 8, 5, 0.96);
+  background: #030805;
   overflow: auto;
   padding: clamp(24px, 3vw, 56px);
   cursor: auto;

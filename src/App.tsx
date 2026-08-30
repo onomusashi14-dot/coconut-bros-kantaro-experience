@@ -26,6 +26,7 @@ function Experience() {
 
   useEffect(() => {
     document.body.dataset.mode = mode
+    document.documentElement.dataset.mode = mode
   }, [mode])
 
   // The cursor is hidden during the presentation and returns whenever a control

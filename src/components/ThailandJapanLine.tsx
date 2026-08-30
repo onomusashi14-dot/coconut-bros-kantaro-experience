@@ -47,13 +47,13 @@ export function ThailandJapanLine({ draw, opacity = 1 }: ThailandJapanLineProps)
 
           {/* Across the negative space */}
           <path
-            d="M 806 258 C 930 190 1052 176 1166 206"
+            d="M 806 258 C 930 186 1046 172 1164 200"
             style={line(seg(draw, SEGMENTS.crossing))}
             strokeWidth="1.3"
           />
 
           {/* Japan */}
-          <g transform="translate(1136, 152) scale(1.12)">
+          <g transform="translate(1130, 140) scale(1.25)">
             <path d={JAPAN_MAIN_PATH} style={line(seg(draw, SEGMENTS.japanMain))} strokeWidth="1.7" />
             <path d={JAPAN_SOUTH_PATH} style={line(seg(draw, SEGMENTS.japanSouth))} strokeWidth="1.5" />
             <path d={JAPAN_NORTH_PATH} style={line(seg(draw, SEGMENTS.japanNorth))} strokeWidth="1.6" />
